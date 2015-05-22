@@ -15,8 +15,11 @@ infixOp = do
 
 runExpr = runParser expr 0 "<input>"
 
+showResult (Left a)  = "Error: " ++ show a
+showResult (Right a) = show a
+  
 main = do
-  putStrLn "args: {"
+  putStrLn "args:"
   args <- System.Environment.getArgs
-  args `forM_` (putStrLn . show . runExpr)
-  putStrLn "}"
+  args `forM_` ((\s -> putStr " - " >> putStrLn s) . showResult . runExpr)
+  putStrLn ""
