@@ -14,7 +14,7 @@ cabal-version:       >=1.10
 
 source-repository head
   type:     git
-  location: git@github.com:steshaw/huttons-razor.git
+  location: git@github.com:steshaw/huttons-razor
 
 executable huttons-razor
   main-is:             Main.hs
