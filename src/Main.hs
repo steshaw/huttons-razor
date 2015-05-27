@@ -1,11 +1,7 @@
-import System.Environment
+import System.Environment (getArgs)
 import Control.Monad (forM_)
-import Text.ParserCombinators.Parsec
-import qualified Text.ParserCombinators.Parsec.Number as Numbers
-
-expr = chainl1 int infixOp
-
-int = Numbers.int
+import Text.ParserCombinators.Parsec (spaces, char, chainl1, runParser)
+import Text.ParserCombinators.Parsec.Number (int)
 
 infixOp = do
   spaces
@@ -13,11 +9,13 @@ infixOp = do
   spaces
   return (+)
 
+expr = chainl1 int infixOp
+
 runExpr = runParser expr 0 "<input>"
 
 showResult (Left a)  = "Error: " ++ show a
 showResult (Right a) = show a
-  
+
 main = do
   putStrLn "args:"
   args <- System.Environment.getArgs
