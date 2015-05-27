@@ -16,8 +16,10 @@ runExpr = runParser expr 0 "<input>"
 showResult (Left a)  = "Error: " ++ show a
 showResult (Right a) = show a
 
+parse = (" - " ++) . showResult . runExpr
+
 main = do
   putStrLn "args:"
   args <- System.Environment.getArgs
-  forM_ args $ putStrLn . (" - " ++) . showResult . runExpr
+  mapM_ (putStrLn . parse) args
   putStrLn ""
