@@ -1,1 +1,8 @@
-dist/build/foo/foo '1 + 2' '' '3 + 4' '+' '1+' '1 - 2' 
+#!/usr/bin/env bash
+
+echo "Good examples"
+dist/build/huttons-razor/huttons-razor '1 + 2' '3 + 4' '99999999999999999+1'
+
+echo
+echo "Bad examples"
+dist/build/huttons-razor/huttons-razor '' '+' '1+' '1 - 2'
