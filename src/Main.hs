@@ -19,5 +19,6 @@ showResult (Right a) = show a
 main = do
   putStrLn "args:"
   args <- System.Environment.getArgs
-  args `forM_` ((\s -> putStr " - " >> putStrLn s) . showResult . runExpr)
+  let p s = putStr " - " >> putStrLn s in
+    (p . showResult . runExpr) `mapM_` args
   putStrLn ""
