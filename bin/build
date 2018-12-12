@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cabal2nix --shell . >shell.nix
-nix-shell --command 'cabal configure && cabal build'
+nix-shell --command 'cabal update && cabal configure && cabal build'
