@@ -8,5 +8,5 @@ mkDerivation {
   buildDepends = [ base parsec parsec-numbers ];
   homepage = "https://github.com/steshaw/huttons-razor";
   description = "Quick implemention of Hutton's Razor";
-  license = stdenv.lib.licenses.bsd2;
+  license = stdenv.lib.licenses.isc;
 }
