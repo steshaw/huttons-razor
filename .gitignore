@@ -1,4 +1,9 @@
-dist/
 .cabal-sandbox/
-cabal.sandbox.config
-shell.nix
+/cabal.project.local
+/cabal.sandbox.config
+/default.nix
+/dist-newstyle/
+/dist/
+/huttons-razor.nix
+/result
+/shell.nix

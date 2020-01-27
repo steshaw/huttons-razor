@@ -2,7 +2,7 @@ name:                huttons-razor
 version:             0.1.1.0
 synopsis:            Quick implemention of Hutton's Razor
 description:         Quick implemention of Hutton's Razor
-license:             BSD2
+license:             ISC
 license-file:        LICENSE
 author:              Steven Shaw
 maintainer:          steven@steshaw.org
@@ -18,7 +18,7 @@ source-repository head
 
 executable huttons-razor
   main-is:             Main.hs
-  build-depends:       base >=4.8 && <4.9
+  build-depends:       base >=4.8 && <5
                      , parsec
                      , parsec-numbers
   hs-source-dirs:      src

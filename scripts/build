@@ -1,4 +1,33 @@
 #!/usr/bin/env bash
 
-cabal2nix --shell . >shell.nix
-nix-shell --command 'cabal update && cabal configure && cabal build'
+set -euo pipefail
+${DEBUG:-}
+
+ghc='ghc865'
+
+use_shell=0 # Let's use nix-build rather than nix-shell (and cabal commands).
+
+if [[ $use_shell == 1 ]]; then
+
+  cabal2nix --shell . >shell.nix
+  cabal2nix --shell . | nix-shell --argstr 'compiler' "${ghc}" \
+    --command 'cabal v2-update && cabal v2-configure && cabal v2-build' \
+    -
+
+else
+  package_name=$(basename "${PWD}")
+
+  cabal2nix --no-haddock . >"${package_name}.nix"
+
+  cat <<! >default.nix
+{ nixpkgs ? import <nixpkgs> {}, compiler ? "${ghc}" }:
+nixpkgs.pkgs.haskell.packages.\${compiler}.callPackage ./${package_name}.nix { }
+!
+
+  cat <<! >shell.nix
+{ nixpkgs ? import <nixpkgs> {}, compiler ? "${ghc}" }:
+(import ./default.nix { inherit nixpkgs compiler; }).env
+!
+
+  nix-build
+fi

@@ -4,9 +4,24 @@ function Indent() {
   sed -e 's/^/  /'
 }
 
-echo "Good examples"
-dist/build/huttons-razor/huttons-razor '1 + 2' '3 + 4' '99999999999999999+1' | Indent
+use_shell=0 # Let's use nix-build rather than nix-shell (and cabal commands).
 
-echo
-echo "Bad examples"
-dist/build/huttons-razor/huttons-razor '' '+' '1+' '1 - 2' | Indent
+if [[ $use_shell == 1 ]]; then
+  echo "Good examples"
+  cabal2nix --shell . |
+    nix-shell --command 'cabal v2-run huttons-razor -- "1 + 2" "3 + 4"' - |
+    Indent
+
+  echo
+  echo "Bad examples"
+  cabal2nix --shell . |
+    nix-shell --command 'cabal v2-run huttons-razor -- "" "+" "1+" "1 - 2"' |
+    Indent
+else
+  echo "Good examples"
+  ./result/bin/huttons-razor "1 + 2" "3 + 4" | Indent
+
+  echo
+  echo "Bad examples"
+  ./result/bin/huttons-razor "" "+" "1+" "1 - 2" | Indent
+fi
